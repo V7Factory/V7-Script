@@ -45,7 +45,7 @@ local loginp = [[
 set_border_color|112,86,191,255
 set_bg_color|43,34,74,200
 set_default_color|`0
-add_label_with_icon|big|`cV7-Proxy       ``Information|left|9474|
+add_label_with_icon|big|`cV7-Proxy          ``Information|left|9474|
 add_smalltext|             Version `2BETA|
 add_spacer|small|
 add_label_with_icon|small|Proxy made by `2@kevin.sinaga|left|12436|
@@ -473,9 +473,9 @@ local function logspin()
             "set_border_color|112,86,191,255|\n" ..
             "set_bg_color|43,34,74,200|\n" ..
             "set_default_color|`0\n" ..
-            "add_label_with_icon|big|Spin History|left|1436|\n" ..
+            "add_label_with_icon|big|Spin Logs|left|1436|\n" ..
             "add_spacer|small|\n" ..
-            "add_textbox|Current world : `2" .. worldName .. "|left|\n" ..
+            "add_textbox|Current world : `c" .. worldName .. "|left|\n" ..
             "add_smalltext|Click the wheel icon to filter the spins|\n" ..
             table.concat(dialogSpin) ..
             "\nadd_spacer|small|\n" ..
@@ -522,7 +522,7 @@ local function filterspin(id)
             "set_default_color|`0\n" ..
             "add_label_with_icon|big|" ..
             GetName(id) ..
-            "'s ``Spin History|left|1436|\n" ..
+            "'s ``Spin Logs|left|1436|\n" ..
             "add_spacer|small|\n" ..
             table.concat(filterLog) ..
             "|\nadd_spacer|small|\n" ..
@@ -1297,6 +1297,8 @@ end
 
 AddHook("OnVarlist", "V7_Main", function(var)
     if var[0]:find("OnSpawn") and var[1]:find("name|") then
+        local world = getWorld()
+        local worldName = world and world.name or "Unknown"
         local name = var[1]:match("name|([^\n\r]+)")
         local lp = getLocalPlayerSafe()
         local localName = lp and (lp.name or lp.Name)
@@ -1306,8 +1308,8 @@ AddHook("OnVarlist", "V7_Main", function(var)
         local cleanLocalName = localName:gsub("`.", "")
 
         if cleanName ~= cleanLocalName then
-            tol("`5<`0" .. name .. " `5present in this world>")
-            ovlay("`5<`0" .. name .. " `5present in this world>")
+            tol("`5<`0" .. name .. " ``has joined this `c" .. worldName .. "``>")
+            ovlay("`5<`0" .. name .. " ``has joined this " .. worldName .. "``>")
         end
     end
 end
